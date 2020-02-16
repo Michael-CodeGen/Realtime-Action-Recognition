@@ -117,34 +117,34 @@ class ImageDisplayer(object):
 
 
 def main(args):
-    vid_cnt = 0;
+    vid_cnt = 0
     files = os.listdir(args.input_video_path)
     for f in files:
         video_loader = ReadFromVideo(args.input_video_path+f)
-        vid_cnt += 1;
+        vid_cnt += 1
         path_name=args.action+'_'+str(vid_cnt)
         if not os.path.exists(path_name):
             os.makedirs(path_name)
 
         def set_output_filename(i):
-            return args.output_folder_path + "/" + "{:08d}".format(i) + ".jpg"
+            return path_name + "/" + "{:08d}".format(i) + ".jpg"
 
         #img_displayer = ImageDisplayer()
         cnt_img = 0
         for i in itertools.count():
             img = video_loader.read_image()
-        if img is None:
-            print("Have read all frames from the video file.")
-            break
-        if i % args.sample_interval == 0:
-            cnt_img += 1
-            print("Processing {}th image".format(cnt_img))
-            cv2.imwrite(set_output_filename(cnt_img), img)
-            #img_displayer.display(img)
-            if cnt_img == args.max_frames:
-                print("Read {} frames. ".format(cnt_img) +
-                      "Reach the max_frames setting. Stop.")
+            if img is None:
+                print("Have read all frames from the video file.")
                 break
+            if i % args.sample_interval == 0:
+                cnt_img += 1
+                print("Processing {}th image".format(cnt_img))
+                cv2.imwrite(set_output_filename(cnt_img), img)
+                #img_displayer.display(img)
+                if cnt_img == args.max_frames:
+                    print("Read {} frames. ".format(cnt_img) +
+                        "Reach the max_frames setting. Stop.")
+                    break
 
 
 if __name__ == "__main__":
