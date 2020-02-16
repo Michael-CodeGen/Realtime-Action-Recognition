@@ -117,12 +117,12 @@ class ImageDisplayer(object):
 
 
 def main(args):
-    i = 0;
+    vid_cnt = 0;
     files = os.listdir(args.input_video_path)
     for f in files:
         video_loader = ReadFromVideo(args.input_video_path+f)
-        i += 1;
-        path_name=args.action+'_'+str(i)
+        vid_cnt += 1;
+        path_name=args.action+'_'+str(vid_cnt)
         if not os.path.exists(path_name):
             os.makedirs(path_name)
 
@@ -140,7 +140,7 @@ def main(args):
             cnt_img += 1
             print("Processing {}th image".format(cnt_img))
             cv2.imwrite(set_output_filename(cnt_img), img)
-            img_displayer.display(img)
+            #img_displayer.display(img)
             if cnt_img == args.max_frames:
                 print("Read {} frames. ".format(cnt_img) +
                       "Reach the max_frames setting. Stop.")
