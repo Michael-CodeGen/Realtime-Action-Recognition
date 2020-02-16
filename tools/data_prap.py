@@ -28,9 +28,9 @@ ROOT = os.path.dirname(os.path.abspath(__file__))+"/"
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Convert a folder of images into a video.")
+        description="Convert a folder of video into a images.")
     parser.add_argument("-i", "--input_video_path", type=str, required=True)
-    parser.add_argument("-o", "--output_folder_path", type=str, required=True)
+    parser.add_argument("-a","--action",type=str,required=True)
     parser.add_argument("-s", "--sample_interval", type=int, required=False,
                         default=1,
                         help="Sample every nth video frame to save to folder. Default 1.")
@@ -117,19 +117,22 @@ class ImageDisplayer(object):
 
 
 def main(args):
+    int i = 0;
+    files = os.listdir(args.input_video_path)
+    for f in files:
+        video_loader = ReadFromVideo(f)
+        i += 1;
+        path_name=args.action+'_'+str(i)
+        if not os.path.exists(path_name):
+            os.makedirs(path_name)
 
-    video_loader = ReadFromVideo(args.input_video_path)
+        def set_output_filename(i):
+            return args.output_folder_path + "/" + "{:08d}".format(i) + ".jpg"
 
-    if not os.path.exists(args.output_folder_path):
-        os.makedirs(args.output_folder_path)
-
-    def set_output_filename(i):
-        return args.output_folder_path + "/" + "{:08d}".format(i) + ".jpg"
-
-    img_displayer = ImageDisplayer()
-    cnt_img = 0
-    for i in itertools.count():
-        img = video_loader.read_image()
+        #img_displayer = ImageDisplayer()
+        cnt_img = 0
+        for i in itertools.count():
+            img = video_loader.read_image()
         if img is None:
             print("Have read all frames from the video file.")
             break
