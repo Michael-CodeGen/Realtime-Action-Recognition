@@ -117,10 +117,10 @@ class ImageDisplayer(object):
 
 
 def main(args):
-    int i = 0;
+    i = 0;
     files = os.listdir(args.input_video_path)
     for f in files:
-        video_loader = ReadFromVideo(f)
+        video_loader = ReadFromVideo(args.input_video_path+f)
         i += 1;
         path_name=args.action+'_'+str(i)
         if not os.path.exists(path_name):
