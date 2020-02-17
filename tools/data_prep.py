@@ -127,7 +127,7 @@ def main(args):
             os.makedirs(path_name)
 
         def set_output_filename(i):
-            return path_name + "/" + "{:08d}".format(i) + ".jpg"
+            return path_name + "/" + "{:05d}".format(i) + ".jpg"
 
         #img_displayer = ImageDisplayer()
         cnt_img = 0
